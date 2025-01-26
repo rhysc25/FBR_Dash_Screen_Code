@@ -1,4 +1,4 @@
-#include <mcp_can.h>
+#include <../mcp_can/mcp_can.h>
 #include <SPI.h>
 
 
