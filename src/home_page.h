@@ -34,7 +34,7 @@ void updateSpeedometer(int data_buffer[48],EasyNex myNex){
     if (value>120){
         image_number = number_of_images;
     }else{
-        image_number = value * (120/number_of_images);
+        image_number = value * (number_of_images/120.0);
     }
     image_number += offset;
 
