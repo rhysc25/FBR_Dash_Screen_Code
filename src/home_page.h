@@ -14,7 +14,7 @@ void updateTachometer(int data_buffer[48],EasyNex myNex){
     if (value>16){
         image_number = number_of_images;
     }else{
-        image_number = value * (16/number_of_images);
+        image_number = value * (number_of_images/16.0);
     }
     image_number += offset;
 
