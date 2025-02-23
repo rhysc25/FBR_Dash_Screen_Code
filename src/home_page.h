@@ -3,7 +3,7 @@
 #include <graphs.h>
 
 
-void updateTachometer(int data_buffer[48],EasyNex myNex){
+void updateTachometer(int data_buffer[48],EasyNex &myNex){
     
     uint16_t value = getFromBuffer(2,2,data_buffer);
 
@@ -22,7 +22,7 @@ void updateTachometer(int data_buffer[48],EasyNex myNex){
 }
 
 
-void updateSpeedometer(int data_buffer[48],EasyNex myNex){
+void updateSpeedometer(int data_buffer[48],EasyNex &myNex){
 
     uint16_t value = 0;
 
@@ -41,7 +41,7 @@ void updateSpeedometer(int data_buffer[48],EasyNex myNex){
     myNex.writeNum("speedometer.pic",image_number);
 }
 
-void updateStickPosition(int data_buffer[48], EasyNex myNex){
+void updateStickPosition(int data_buffer[48], EasyNex &myNex){
 
     uint16_t position = getFromBuffer(6,2,data_buffer);
 
@@ -61,7 +61,7 @@ void updateStickPosition(int data_buffer[48], EasyNex myNex){
 }
 
 
-void updateTemp(int data_buffer[48], EasyNex myNex){
+void updateTemp(int data_buffer[48], EasyNex &myNex){
 
     uint16_t value = getFromBuffer(4,2,data_buffer);
 
@@ -84,7 +84,7 @@ void updateTemp(int data_buffer[48], EasyNex myNex){
     };
     myNex.writeNum("temp_guage.pco",colour);
 }
-void updateManifoldAirTemperature(int data_buffer[48],EasyNex myNex){ //Turns warning light on/off
+void updateManifoldAirTemperature(int data_buffer[48],EasyNex &myNex){ //Turns warning light on/off
 
     int temp = getFromBuffer(12,2,data_buffer);
 
@@ -98,7 +98,7 @@ void updateManifoldAirTemperature(int data_buffer[48],EasyNex myNex){ //Turns wa
 
 }
 
-void updateAirPressure(int data_buffer[48], EasyNex myNex){ //Turns warning light on/of 
+void updateAirPressure(int data_buffer[48], EasyNex &myNex){ //Turns warning light on/of 
 
     uint16_t pressure = getFromBuffer(0,2,data_buffer);
 
@@ -112,7 +112,7 @@ void updateAirPressure(int data_buffer[48], EasyNex myNex){ //Turns warning ligh
 
 }
 
-void updateBatteryVoltage(int data_buffer[48], EasyNex myNex){ //Turns warning light on/off
+void updateBatteryVoltage(int data_buffer[48], EasyNex &myNex){ //Turns warning light on/off
 
     uint16_t voltage = getFromBuffer(24,2,data_buffer);
 
@@ -125,7 +125,7 @@ void updateBatteryVoltage(int data_buffer[48], EasyNex myNex){ //Turns warning l
 
     myNex.writeNum("battery_volts.pco",colour);
 }
-void setWarningLights(int data_buffer[48],EasyNex myNex){ //Just runs the updates only for simplification
+void setWarningLights(int data_buffer[48],EasyNex &myNex){ //Just runs the updates only for simplification
     updateAirPressure(data_buffer, myNex);
     updateManifoldAirTemperature(data_buffer, myNex);
     updateBatteryVoltage(data_buffer,myNex);
@@ -133,7 +133,7 @@ void setWarningLights(int data_buffer[48],EasyNex myNex){ //Just runs the update
 
 
 
-void updateHomePage(EasyNex myNex,int data_buffer[48]){
+void updateHomePage(EasyNex &myNex,int data_buffer[48]){
 
 
 
