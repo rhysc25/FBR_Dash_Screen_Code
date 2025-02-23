@@ -94,7 +94,9 @@ void updateManifoldAirTemperature(int data_buffer[48],EasyNex &myNex){ //Turns w
     if ((temp> max_safe_val)||(temp < min_safe_val)){
         colour = 40960; //red
     }
-    myNex.writeNum("coolant_temp.pco",colour);
+    myNex.writeNum("cool_light.bco", colour);  // Change background color
+    delay(10);
+    myNex.writeNum("cool_light.val", (colour == 40960) ? 1 : 0); // Toggle checkbox
 
 }
 
@@ -108,7 +110,9 @@ void updateAirPressure(int data_buffer[48], EasyNex &myNex){ //Turns warning lig
     if ((pressure> max_safe_val)||(pressure < min_safe_val)){
         colour = 40960; //red
     }
-    myNex.writeNum("air_pressure.pco",colour);
+    myNex.writeNum("air_pres_light.bco", colour);  // Change background color
+    delay(10);
+    myNex.writeNum("air_pres_light.val", (colour == 40960) ? 1 : 0); // Toggle checkbox
 
 }
 
@@ -116,14 +120,15 @@ void updateBatteryVoltage(int data_buffer[48], EasyNex &myNex){ //Turns warning 
 
     uint16_t voltage = getFromBuffer(24,2,data_buffer);
 
-    uint16_t max_safe_val = 12.5;
-    uint16_t min_safe_val = 11.5;
+    float max_safe_val = 12.5;
+    float min_safe_val = 11.5;
     int colour = 1024; //green
     if ((voltage> max_safe_val)||(voltage < min_safe_val)){
         colour = 40960; //red
     }
-
-    myNex.writeNum("battery_volts.pco",colour);
+    myNex.writeNum("battery_light.bco", colour);  // Change background color
+    delay(10);
+    myNex.writeNum("battery_light.val", (colour == 40960) ? 1 : 0); // Toggle checkbox
 }
 void setWarningLights(int data_buffer[48],EasyNex &myNex){ //Just runs the updates only for simplification
     updateAirPressure(data_buffer, myNex);
