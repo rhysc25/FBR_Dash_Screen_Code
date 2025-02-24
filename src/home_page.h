@@ -41,49 +41,32 @@ void updateSpeedometer(int data_buffer[48],EasyNex &myNex){
     myNex.writeNum("speedometer.pic",image_number);
 }
 
-void updateStickPosition(int data_buffer[48], EasyNex &myNex){
-
-    uint16_t position = getFromBuffer(6,2,data_buffer);
-
-    uint8_t in_red_bound = 90; //change this is not temp but value on progress bar
-    uint8_t in_orange_band = 80; //"" ""
-
-    
-    myNex.writeNum("temp_guage.val",position);
-    
-    int colour = 1024;  //Colour value for a visual warning on the guage -inital = green
-    if (position > in_red_bound){
-        colour = 40960; //red
-    }else if (position > in_orange_band){
-        colour = 45504; //orange
-    };
-    myNex.writeNum("temp_guage.pco",colour);
-}
-
 
 void updateTemp(int data_buffer[48], EasyNex &myNex){
 
     uint16_t value = getFromBuffer(4,2,data_buffer);
 
 
-    int in_red_bound = 90; //change this is not temp but value on progress bar
-    int in_orange_band = 80; //"" ""
-    int max_val = 200; // The maximum value of temperature to be 100 on the progress bar
+    const uint16_t in_red_bound = 90; //change this is not temp but value on progress bar
+    const uint16_t in_orange_band = 80; //"" ""
+    const uint16_t max_val = 200; // The maximum value of temperature to be 100 on the progress bar
 
-    int scaled_for_bar_value = value * (100/max_val);
+    int scaled_for_bar_value = (value * 100) / max_val;
     if (scaled_for_bar_value > 100){
         scaled_for_bar_value = 100;
     };
     myNex.writeNum("temp_guage.val",scaled_for_bar_value);
     
-    int colour = 1024;  //Colour value for a visual warning on the guage -inital = green
+    uint16_t colour = 1024;  //Colour value for a visual warning on the guage -inital = green
     if (scaled_for_bar_value > in_red_bound){
         colour = 40960; //red
     }else if (scaled_for_bar_value > in_orange_band){
         colour = 45504; //orange
     };
     myNex.writeNum("temp_guage.pco",colour);
+    
 }
+
 void updateManifoldAirTemperature(int data_buffer[48],EasyNex &myNex){ //Turns warning light on/off
 
     int temp = getFromBuffer(12,2,data_buffer);
@@ -145,7 +128,6 @@ void updateHomePage(EasyNex &myNex,int data_buffer[48]){
         setWarningLights(data_buffer, myNex);
         updateTachometer(data_buffer, myNex);
         updateSpeedometer(data_buffer, myNex);
-        updateStickPosition(data_buffer,myNex);
         updateTemp(data_buffer,myNex);
 
 
