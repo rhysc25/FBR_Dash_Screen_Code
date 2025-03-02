@@ -24,7 +24,7 @@ void updateTachometer(int data_buffer[48],EasyNex &myNex){
 
 void updateSpeedometer(int data_buffer[48],EasyNex &myNex){
 
-    uint16_t value = 0;
+    uint16_t value = getFromBuffer(32, 2, data_buffer);
 
 
     uint32_t number_of_images = 270;     //There are actually 271 but the 0th image doesnt count
