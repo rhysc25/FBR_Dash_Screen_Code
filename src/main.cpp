@@ -7,7 +7,7 @@ MCP_CAN CAN0(10);
 
 
 
-
+"""
 void sendChartData(const char * id, const char * units,int num_bytes,int location_in_buffer,char data_string_buffer[20],char units_buffer[18]){
   String id_as_string = id;
   int data_from_buffer = getFromBuffer(location_in_buffer,num_bytes,data_buffer);
@@ -48,6 +48,41 @@ void updateDataChart(){
   sendChartData("gp.txt"," ",2, 45, data_string_buffer, units);
 
 }
+"""
+
+void sendChartData(const char * id, int num_bytes,int location_in_buffer){
+  String id_as_string = id;
+  String data_from_buffer = getFromBuffer(location_in_buffer,num_bytes,data_buffer);
+ 
+  myNex.writeStr(id_as_string,data_from_buffer);
+}
+
+void updateDataChart(){
+
+  sendChartData("map.txt",2, 0);
+  sendChartData("rpm.txt",2,2);
+  sendChartData("clt.txt",2, 4);
+  sendChartData("tps.txt",2, 6);
+  sendChartData("pw1.txt",2, 8);
+  sendChartData("pw2.txt",2, 10);
+  sendChartData("mat.txt"2, 12);
+  sendChartData("adv_deg.txt",2, 14);
+  sendChartData("afrtg1.txt",1, 16);
+  sendChartData("afr1.txt",1, 17,);
+  sendChartData("egocor1.txt",2, 18);
+  sendChartData("egt1.txt",2, 20);
+  sendChartData("pwseq1.txt",2, 22);
+  sendChartData("batt.txt",2, 24);
+  sendChartData("knk_rtd.txt",1, 30);
+  sendChartData("vss1.txt",2, 32);
+  sendChartData("tc_retard.txt",2, 34);
+  sendChartData("launch_timing.txt",2, 36);
+  sendChartData("sw.txt",1, 40);
+  sendChartData("tp.txt",2, 41);
+  sendChartData("nsl1.txt",2, 43);
+  sendChartData("gp.txt",2, 45);
+
+}
 
 
 void setup(){
@@ -68,12 +103,13 @@ void loop(){
 
   if (page == 1){
     updateHomePage(myNex,data_buffer);
-  }
+  }"""
   else if (page == 7 || page == 8 || page == 9){
     updateDataChart();
-  }
+  }"""
   else if (!(page == 0)) {
-    updateGraphs(data_buffer,myNex);
+    //updateGraphs(data_buffer,myNex);
+    updateDataChart();
   }
 
 }

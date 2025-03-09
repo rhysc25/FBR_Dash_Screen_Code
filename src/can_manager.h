@@ -49,7 +49,7 @@ void readCanDataInBuffer(int data_buffer[48],MCP_CAN CAN0){
 }
 int getFromBuffer(int pointer_offset,int num_bytes,int data_buffer[48]){
     int data_from_buffer = 0;
-    double scale_factor_list[48] = {0.1,0,1,0,0.1,0,0.1,0,0.001,0,0.001,0,0.1,0,0.1,0,0.1,10,0.1,0,0.1,0,0.1,0,0.001,0,0.1,0,0.1,0,0.1,10,0.1,10,0.1,10,0.1,1,1,1,1};
+    double scale_factor_list[48] = {0.1,0,1,0,0.1,0,0.1,0,0.001,0,0.001,0,0.1,0,0.1,0,0.1,0.1,0,0.1,0,0.001,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0};
 
     for (int byte=0; byte < num_bytes; byte++) {
         data_from_buffer += data_buffer[pointer_offset + byte] << (8*byte);
