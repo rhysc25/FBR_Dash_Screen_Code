@@ -2,7 +2,7 @@
 #include <EasyNextionLibrary.h>
 #include <can_manager.h>
 
-"""
+/*
 int convertToGraphValue(int min, int max, int value){
     int max_return_value = 5*256/6;
 
@@ -51,4 +51,4 @@ void updateGraphs(int data_buffer[48],EasyNex myNex){
     updateEngineTempGraph(data_buffer,myNex);
     updateVelocityGraph(data_buffer,myNex);
 }
-"""
+*/
