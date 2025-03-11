@@ -152,7 +152,7 @@ void updateGear(int data_buffer[48], EasyNex &myNex) { // Calculates and display
     }
     
     float wheel_dia = 0.4;
-    float wheel_rpm = (26.82*speed)/(3.124*wheel_dia); // Convert speed to metres per minute and divide by wheel circumference
+    float wheel_rpm = (26.82*speed)/(3.142*wheel_dia); // Convert speed to metres per minute and divide by wheel circumference
     float ratio = rpm/wheel_rpm;
     
     float gear_ratios[7] = {5, 12, 20, 33, 45, 50, 60}; // These are arbitrary, need to change once I know the actual values
@@ -175,7 +175,7 @@ void updateGear(int data_buffer[48], EasyNex &myNex) { // Calculates and display
     char intStr[8];  // Sufficient for int (-2147483648 to 2147483647)
     itoa(gear_number, intStr, 10);  // Convert integer to string (base 10)
     
-    myNex.writeStr("Gear.txt", intStr);  // Pass the string to the Nextion
+    myNex.writeStr("gear.txt", intStr);  // Pass the string to the Nextion
 }
 
 
