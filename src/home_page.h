@@ -2,7 +2,7 @@
 #include <EasyNextionLibrary.h>
 #include <graphs.h>
 
-
+/*
 void updateTachometer(int data_buffer[48],EasyNex &myNex){
     
     uint16_t value = getFromBuffer(2,2,data_buffer);
@@ -20,7 +20,7 @@ void updateTachometer(int data_buffer[48],EasyNex &myNex){
 
     myNex.writeNum("tachometer.pic",image_number);
 }
-
+*/
 
 void updateSpeedometer(int data_buffer[48],EasyNex &myNex){
 
@@ -64,7 +64,30 @@ void updateTemp(int data_buffer[48], EasyNex &myNex){
         colour = 45504; //orange
     };
     myNex.writeNum("temp_guage.pco",colour);
+}
+
+void updateTachometer(int data_buffer[48], EasyNex &myNex){
+
+    uint16_t value = getFromBuffer(2,2,data_buffer);
+
+
+    const uint16_t in_red_bound = 80; //change this is not temp but value on progress bar
+    const uint16_t in_orange_band = 70; //"" ""
+    const uint16_t max_val = 16000; // The maximum value of temperature to be 100 on the progress bar
+
+    int scaled_for_bar_value = (value * 100) / max_val;
+    if (scaled_for_bar_value > 100){
+        scaled_for_bar_value = 100;
+    };
+    myNex.writeNum("tachometer.val",scaled_for_bar_value);
     
+    uint16_t colour = 1024;  //Colour value for a visual warning on the guage -inital = green
+    if (scaled_for_bar_value > in_red_bound){
+        colour = 40960; //red
+    }else if (scaled_for_bar_value > in_orange_band){
+        colour = 45504; //orange
+    };
+    myNex.writeNum("tachometer.pco",colour);
 }
 
 void updateManifoldAirTemperature(int data_buffer[48],EasyNex &myNex){ //Turns warning light on/off
