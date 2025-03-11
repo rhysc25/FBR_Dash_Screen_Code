@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <EasyNextionLibrary.h>
 #include <graphs.h>
+#include <math.h> 
 
 /*
 void updateTachometer(int data_buffer[48],EasyNex &myNex){
@@ -142,6 +143,41 @@ void setWarningLights(int data_buffer[48],EasyNex &myNex){ //Just runs the updat
     updateBatteryVoltage(data_buffer,myNex);
 }
 
+void updateGear(int data_buffer[48], EasyNex &myNex) { // Calculates and displays the gear 
+    int rpm = getFromBuffer(2,2,data_buffer);
+    int speed = getFromBuffer(32,2,data_buffer);
+    
+    if (speed == 0) { // Ensures no zero errors
+        return;
+    }
+    
+    float wheel_dia = 0.4;
+    float wheel_rpm = (26.82*speed)/(3.124*wheel_dia); // Convert speed to metres per minute and divide by wheel circumference
+    float ratio = rpm/wheel_rpm;
+    
+    float gear_ratios[7] = {5, 12, 20, 33, 45, 50, 60}; // These are arbitrary, need to change once I know the actual values
+    int closest = gear_ratios[0];  // Assume first number is closest
+    int minDiff = fabs(ratio - closest);
+    
+    int gear_number = 1;  // Initialize gear_number outside the loop
+    static int i = 0;
+    i = 0;  // Reset i at each function call
+    
+    for (int num : gear_ratios) { // Finds the gear whose gear ratio matches the ratio of crankshaft rpm to wheel rpm
+        i++;
+        int diff = fabs(ratio - num);
+        if (diff < minDiff) {
+            minDiff = diff;
+            gear_number = i;  
+        }
+    }
+    
+    char intStr[8];  // Sufficient for int (-2147483648 to 2147483647)
+    itoa(gear_number, intStr, 10);  // Convert integer to string (base 10)
+    
+    myNex.writeStr("Gear.txt", intStr);  // Pass the string to the Nextion
+}
+
 
 
 void updateHomePage(EasyNex &myNex,int data_buffer[48]){
@@ -152,7 +188,7 @@ void updateHomePage(EasyNex &myNex,int data_buffer[48]){
         updateTachometer(data_buffer, myNex);
         updateSpeedometer(data_buffer, myNex);
         updateTemp(data_buffer,myNex);
-
+        updateGear(data_buffer, myNex);
 
 
 }
