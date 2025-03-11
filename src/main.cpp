@@ -107,6 +107,7 @@ void loop(){
 
   if (page == 1){
     updateHomePage(myNex,data_buffer);
+    sendChartData("rpm.txt",2,2);
   }
   /*
   else if (page == 7 || page == 8 || page == 9){
