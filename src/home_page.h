@@ -156,16 +156,16 @@ void updateGear(int data_buffer[48], EasyNex &myNex) { // Calculates and display
     float ratio = rpm/wheel_rpm;
     
     float gear_ratios[5] = {16.06, 12.44, 10.39, 8.98, 8}; // (TS) R6 engine Gear Ratios - last updated by Aidan 22/23 
-    int closest = gear_ratios[0];  // Assume first number is closest
-    int minDiff = fabs(ratio - closest);
+    float closest = gear_ratios[0];  // Assume first number is closest
+    float minDiff = fabs(ratio - closest);
     
     int gear_number = 1;  // Initialize gear_number outside the loop
     static int i = 0;
     i = 0;  // Reset i at each function call
     
-    for (int num : gear_ratios) { // Finds the gear whose gear ratio matches the ratio of crankshaft rpm to wheel rpm
+    for (float num : gear_ratios) { // Finds the gear whose gear ratio matches the ratio of crankshaft rpm to wheel rpm
         i++;
-        int diff = fabs(ratio - num);
+        float diff = fabs(ratio - num);
         if (diff < minDiff) {
             minDiff = diff;
             gear_number = i;  
