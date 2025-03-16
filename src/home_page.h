@@ -155,7 +155,7 @@ void updateGear(int data_buffer[48], EasyNex &myNex) { // Calculates and display
     float wheel_rpm = (26.82*speed)/(3.142*wheel_dia); // Convert speed to metres per minute and divide by wheel circumference
     float ratio = rpm/wheel_rpm;
     
-    float gear_ratios[7] = {5, 12, 20, 33, 45, 50, 60}; // These are arbitrary, need to change once I know the actual values
+    float gear_ratios[5] = {16.06, 12.44, 10.39, 8.98, 8}; // (TS) R6 engine Gear Ratios - last updated by Aidan 22/23 
     int closest = gear_ratios[0];  // Assume first number is closest
     int minDiff = fabs(ratio - closest);
     
