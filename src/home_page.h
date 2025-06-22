@@ -1,27 +1,7 @@
 #include <Arduino.h>
+#include <can_manager.h>
 #include <EasyNextionLibrary.h>
-#include <graphs.h>
 #include <math.h> 
-
-/*
-void updateTachometer(int data_buffer[48],EasyNex &myNex){
-    
-    uint16_t value = getFromBuffer(2,2,data_buffer);
-
-    uint32_t number_of_images = 208;     //There are actually 209 but the 0th image doesnt count
-
-    uint32_t offset = 2;
-    uint32_t image_number;
-    if (value>16000.0){
-        image_number = number_of_images;
-    }else{
-        image_number = value * (number_of_images/16000.0);
-    }
-    image_number += offset;
-
-    myNex.writeNum("tachometer.pic",image_number);
-}
-*/
 
 void updateSpeedometer(int data_buffer[48],EasyNex &myNex){
 
