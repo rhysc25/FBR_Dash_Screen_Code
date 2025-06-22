@@ -3,7 +3,7 @@
 
 
 
-bool startCan(MCP_CAN CAN0){
+bool startCan(MCP_CAN &CAN0){
     #define CAN0_INT 2
 
     if(!(CAN0.begin(MCP_ANY, CAN_500KBPS, MCP_16MHZ)==CAN_OK)){
@@ -20,6 +20,9 @@ bool startCan(MCP_CAN CAN0){
 
 void set_data(int data_buffer[48],unsigned char rxBuf[8], long unsigned int rxID){
     
+    // Uses the message ID to identify the correct location in the buffer. 
+    // The bytes are then copied into the buffer at the correct place
+
     int pointer_offset = (rxID - 1512)*8;
     int * pointer_start = data_buffer+pointer_offset;
     
@@ -33,7 +36,11 @@ void set_data(int data_buffer[48],unsigned char rxBuf[8], long unsigned int rxID
 }
 
 
-void readCanDataInBuffer(int data_buffer[48],MCP_CAN CAN0){
+void readCanDataInBuffer(int data_buffer[48],MCP_CAN &CAN0){
+
+    // If there has been a message, the interrupt pin 
+    // is pulled low, and the message is read
+
     long unsigned int rxID;
     unsigned char len=0;
     unsigned char rxBuf[8];
@@ -48,6 +55,10 @@ void readCanDataInBuffer(int data_buffer[48],MCP_CAN CAN0){
     
 }
 int getFromBuffer(int pointer_offset,int num_bytes,int data_buffer[48]){
+
+    // Finds the data in the buffer using the pointer offset. Combines the bytes 
+    // at that location into a single integer, and scales them 
+
     int data_from_buffer = 0;
     double scale_factor_list[48] = {0.1,0,1,0,0.1,0,0.1,0,0.001,0,0.001,0,0.1,0,0.1,0,0.1,0.1,0,0.1,0,0.001,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0,0.1,0};
 
